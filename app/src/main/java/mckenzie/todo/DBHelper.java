@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +23,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TASKS_COLUMN_ID = "id";
     public static final String TASKS_COLUMN_TITLE = "title";
     public static final String TASKS_COLUMN_DESC = "description";
-    public static final String TASKS_DUE_HOUR = "due_hour";
-    public static final String TASKS_DUE_MINUTE = "due_minute";
+    public static final String TASKS_COLUMN_DUE_HOUR = "due_hour";
+    public static final String TASKS_COLUMN_DUE_MINUTE = "due_minute";
 
     //TODO: create more fields for date if necessary for data type
-    public static final String TASKS_CREATED_DATE = "created_date";
-    public static final String TASKS_DUE_DATE = "due_date";
+    public static final String TASKS_COLUMN_CREATED_DATE = "created_date";
+    public static final String TASKS_COLUMN_DUE_DATE = "due_date";
 
     private HashMap hp;
 
@@ -42,8 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "create table tasks" +
                         "(id integer primary key, title text, " +
                         "description text, due_hour integer, due_minute integer," +
-                        "created_date text, due_date text)";
-        );
+                        "created_date text, due_date text)");
     }
 
     @Override
@@ -108,8 +108,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[] { Integer.toString(id) });
     }
 
-    public ArrayList<String> getAllTasks() {
-        ArrayList<String> array_list = new ArrayList<>();
+    public ArrayList<ToDoItem> getAllTasks() {
+        ArrayList<ToDoItem> items = new ArrayList<>();
 
         //hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -117,12 +117,22 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToNext();
 
         while (!cursor.isAfterLast()) {
-            array_list.add(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_TITLE)));
+            ToDoItem loadedItem = new ToDoItem();
+
+            loadedItem.setTitle(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_TITLE)));
+            loadedItem.setDesc(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_DESC)));
+            loadedItem.setHour(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_HOUR)));
+            loadedItem.setMinute(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_MINUTE)));
+            //TODO: get date
+
+            Log.d("LOADED TASK TITLE ", cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_TITLE)));
+
+            items.add(loadedItem);
             cursor.moveToNext();
         }
-        return array_list;
+        cursor.close();
+        return items;
     }
-
 
 }
 

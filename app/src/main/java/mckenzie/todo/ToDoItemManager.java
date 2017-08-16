@@ -15,22 +15,22 @@ public class ToDoItemManager {
     private DBHelper db;
 
     //public static ToDoItem[] items;
-    public static List<ToDoItem> items;
+    public static ArrayList<ToDoItem> items;
 
-    void loadItems(Context context) {
+    ArrayList<ToDoItem> loadItems(Context context) {
         //TODO: Read items from storage
         db = new DBHelper(context);
+        items = db.getAllTasks();
 
-//        ArrayList<String> array_list = db.getAllTasks();
-//        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.to_do_item_cell, array_list);
-
+        return items;
     }
 
-    void addNewItem(ToDoItem newItem) {
+    void addNewItem(ToDoItem newTask) {
         //TODO: Append new item to end of the list
         //TODO: Save to storage
+        db.insertTask(newTask);
 
-        loadItems();
+        //loadItems();
 
     }
 
