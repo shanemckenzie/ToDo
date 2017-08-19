@@ -40,10 +40,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //TODO: auto-generated method stub
         db.execSQL(
-                "create table tasks" +
-                        "(id integer primary key, title text, " +
-                        "description text, due_hour integer, due_minute integer," +
-                        "created_date text, due_date text)");
+                "CREATE TABLE tasks" +
+                        "(id INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1, title TEXT, " +
+                        "description TEXT, due_hour INTEGER, due_minute INTEGER," +
+                        "created_date TEXT, due_date TEXT)");
     }
 
     @Override
@@ -56,8 +56,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertTask(ToDoItem newItem) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
-
 
         contentValues.put("title", newItem.getTitle());
         contentValues.put("description", newItem.getDesc());
@@ -73,10 +71,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getData(int id) {
+    public ToDoItem getData(int id) {
+        //DBHelper dbhelper = new DBHelper(context);
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from tasks where id="+id+"", null);
-        return res;
+        Cursor cursor = db.rawQuery("SELECT * FROM tasks WHERE id="+id+";", null);
+        cursor.moveToFirst();
+
+        ToDoItem retrievedItem = new ToDoItem();
+
+        retrievedItem.setTitle(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_TITLE)));
+        retrievedItem.setDesc(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_DESC)));
+        retrievedItem.setHour(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_HOUR)));
+        retrievedItem.setMinute(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_MINUTE)));
+        retrievedItem.setId(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_ID)));
+        //TODO: get date
+
+        return retrievedItem;
     }
 
     public int numberOfRows() {
@@ -123,9 +133,10 @@ public class DBHelper extends SQLiteOpenHelper {
             loadedItem.setDesc(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_DESC)));
             loadedItem.setHour(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_HOUR)));
             loadedItem.setMinute(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_MINUTE)));
+            loadedItem.setId(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_ID)));
             //TODO: get date
 
-            Log.d("LOADED TASK TITLE ", cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_TITLE)));
+            Log.d("LOADED TASK ID ", cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_ID)));
 
             items.add(loadedItem);
             cursor.moveToNext();

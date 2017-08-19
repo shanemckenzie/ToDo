@@ -42,5 +42,14 @@ public class ToDoItemManager {
 
     }
 
+    ToDoItem getItem(Context context, int id) {
+
+        db = new DBHelper(context);
+        ToDoItem retrievedItem;
+        retrievedItem = db.getData(id);
+
+        return retrievedItem;
+    }
+
 
 }
