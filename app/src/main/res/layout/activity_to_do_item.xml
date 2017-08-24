@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mckenzie.todo.ToDoItemActivity"
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center_horizontal"
+        >
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/toolbar_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <EditText
+            android:id="@+id/to_do_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Title"
+            android:layout_below="@+id/toolbar_top"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+
+            android:layout_marginTop="10dp"
+
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+
+            android:background="@color/colorAccent"
+
+            />
+
+        <EditText
+            android:id="@+id/to_do_item_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="Task Description"
+            android:layout_below="@+id/to_do_title"
+
+            android:gravity="top"
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+
+            android:layout_marginTop="10dp"
+
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+
+            android:maxLength="2000"
+            android:lines="4"
+            android:maxLines="10"
+            android:scrollbars="vertical"
+
+            android:background="@color/colorAccent"
+
+            />
+
+        <!-- TODO: throw time & date picker in a Dialogue Fragment -->
+        <!--TODO: time picker not working with scroll view-->
+
+        <Button
+            android:id="@+id/btn_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Time"
+            android:layout_below="@+id/to_do_item_desc"
+            android:layout_centerInParent="true"
+
+            android:layout_marginTop="15dp"
+
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryDark"
+            />
+        <TextView
+            android:id="@+id/due_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/btn_time"
+            android:layout_alignBaseline="@+id/btn_time"
+            android:text="Time"
+            />
+
+        <Button
+            android:id="@+id/btn_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            android:layout_below="@+id/btn_time"
+            android:layout_centerInParent="true"
+
+            android:layout_marginTop="15dp"
+
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryDark"
+            />
+        <TextView
+            android:id="@+id/due_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/btn_date"
+            android:layout_alignBaseline="@+id/btn_date"
+            android:text="Date"
+            />
+
+
+        <!--<TimePicker-->
+            <!--android:id="@+id/to_do_time_picker"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/to_do_item_desc"-->
+
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:paddingLeft="5dp"-->
+            <!--android:paddingRight="5dp"-->
+
+            <!--android:layout_marginTop="10dp"-->
+
+            <!--android:paddingTop="15dp"-->
+            <!--android:paddingBottom="15dp"-->
+            <!--&gt;-->
+
+        <!--</TimePicker>-->
+
+        <!--<DatePicker-->
+            <!--android:id="@+id/to_do_date_picker"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/to_do_time_picker"-->
+
+
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:paddingLeft="5dp"-->
+            <!--android:paddingRight="5dp"-->
+
+            <!--android:layout_marginTop="10dp"-->
+
+            <!--android:paddingTop="15dp"-->
+            <!--android:paddingBottom="15dp"-->
+            <!--&gt;-->
+
+
+        <!--</DatePicker>-->
+
+
+
+    </RelativeLayout>
+</ScrollView>
