@@ -114,8 +114,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Integer deleteTask (Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("tasks", "id = ? ",
-                new String[] { Integer.toString(id) });
+        return db.delete(TASKS_TABLE_NAME,
+                "id = ? ", new String[] { Integer.toString(id) });
+
     }
 
     public ArrayList<ToDoItem> getAllTasks() {

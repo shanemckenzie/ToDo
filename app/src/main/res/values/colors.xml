@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ff6700</color>
-    <color name="colorPrimaryDark">#4d4d4d</color>
-    <color name="colorAccent">#ffeeb8</color>
+    <color name="colorPrimaryDark">#313131</color>
+    <color name="colorAccent">#ff6700</color>
     <color name="cell">#fff5f5</color>
     <color name="yellow">#c9ff00</color>
+    <color name="colorLightAccent">#ffeeb8</color>
 
 </resources>

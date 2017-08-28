@@ -60,9 +60,11 @@ public class ToDoListAdapter extends BaseAdapter {
 
         final TextView titleTextView = (TextView)
                 convertView.findViewById(R.id.to_do_item_title);
-
+        final TextView descTextView = (TextView)
+                convertView.findViewById(R.id.to_do_item_desc);
 
         titleTextView.setText(toDoItem.getTitle());
+        descTextView.setText(toDoItem.getDesc());
 
         return convertView;
 

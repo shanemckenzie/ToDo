@@ -4,10 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,11 +25,14 @@ public class ToDoItemActivity
 
     EditText itemTitle;
     EditText itemDesc;
-    TextView dueDateText, dueTimeText;
+    TextView dueDateText, dueTimeText, createdDateText;
     Button btnDatePicker, btnTimePicker;
-    int dueDateDay, dueDateMonth, dueDateYear, dueHour, dueMinute;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    int dueDateDay, dueDateMonth, dueDateYear, dueHour, dueMinute,
+            createdMonth, createdDay, createdYear;
+    private int mYear, mMonth, mDay, mHour, mMinute, id;
     private boolean existingTask;
+
+
 
     ToDoItemManager itemManager;
 
@@ -52,6 +52,7 @@ public class ToDoItemActivity
 
         dueDateText = (TextView) findViewById(R.id.due_date_text);
         dueTimeText = (TextView) findViewById(R.id.due_time_text);
+        createdDateText = (TextView) findViewById(R.id.created_date_text);
 
         btnDatePicker = (Button) findViewById(R.id.btn_date);
         btnDatePicker.setOnClickListener(this);
@@ -64,7 +65,7 @@ public class ToDoItemActivity
 
         if (intent.hasExtra("TASK_ID")) {
             existingTask = true;
-            int id = intent.getIntExtra("TASK_ID", 1);
+            id = intent.getIntExtra("TASK_ID", 1);
 
 
             //ToDoItem currentItem = DBHelper.getData(this, id);
@@ -85,9 +86,29 @@ public class ToDoItemActivity
             //ToDoItem currentItem = new ToDoItem();
 
             itemTitle.setText(id + " " + currentItem.getTitle());
-            itemDesc.setText(currentItem.getDesc());
-            //dueDateText.setText(currentItem.get);
-            dueTimeText.setText(currentItem.getHour() + ":" + currentItem.getMinute());
+            if (currentItem.getDesc() != null) {
+                itemDesc.setText(currentItem.getDesc());
+            }
+
+            if (currentItem.getDueYear() != 0) {
+                dueDateText.setText(currentItem.getDueDay()
+                        + currentItem.getDueMonth() + currentItem.getDueYear());
+            }
+
+            if (currentItem.getHour() != 0) {
+                dueTimeText.setText(currentItem.getHour() + ":" + currentItem.getMinute());
+            }
+
+            if (currentItem.getCreatedYear() != 0) {
+                createdMonth = currentItem.getCreatedMonth();
+                createdDay = currentItem.getCreatedDay();
+                createdYear = currentItem.getCreatedYear();
+
+                createdDateText.setText(createdMonth + "/" +
+                 createdDay + "/" + createdYear);
+            }
+
+
 
             //TODO: Set date & time in dialogue
 //            if (Utils.deviceAPI >= 23) {
@@ -104,6 +125,15 @@ public class ToDoItemActivity
         } else {
             existingTask = false;
 
+            final Calendar c = Calendar.getInstance();
+
+            //TODO: save date created
+            createdYear = c.get(Calendar.YEAR);
+            createdMonth = c.get(Calendar.MONTH);
+            createdDay = c.get(Calendar.DAY_OF_MONTH);
+
+            createdDateText.setText(createdMonth + "/" +
+                    createdDay + "/" + createdYear);
 
         }
 
@@ -181,6 +211,8 @@ public class ToDoItemActivity
                 // overwrite it instead of creating a new item
                 ToDoItem currentItem = new ToDoItem();
 
+                itemManager = new ToDoItemManager();
+
                 if (itemTitle.getText().toString().trim().length() > 0) {
                     currentItem.setTitle(itemTitle.toString());
 
@@ -195,13 +227,47 @@ public class ToDoItemActivity
 //                    currentItem.setMinute(itemDueTime.getMinute());
 
                     if (existingTask) {
+
+                        ToDoItem updatedItem = new ToDoItem();
                         //TODO: Update item
 
+                        updatedItem.setTitle(itemTitle.toString());
+                        updatedItem.setDesc(itemDesc.toString());
+                        updatedItem.setHour(mHour);
+                        updatedItem.setMinute(mMinute);
+                        updatedItem.setCreatedDay(createdDay);
+                        updatedItem.setCreatedMonth(createdMonth);
+                        updatedItem.setCreatedYear(createdYear);
+
+                        itemManager.updateItem(item.getItemId(), updatedItem);
+
                     } else {
+                        
+                        ToDoItem newItem = new ToDoItem();
+                        itemManager = new ToDoItemManager();
                         //TODO: Save new item
+                        newItem.setTitle(itemTitle.toString());
+
+
+                        if (itemDesc != null) {
+                            newItem.setDesc(itemDesc.toString());
+                        }
+
+
+                        if (mHour != 0) {
+                            newItem.setHour(mHour);
+                            newItem.setMinute(mMinute);
+                        }
+                        newItem.setCreatedDay(createdDay);
+                        newItem.setCreatedMonth(createdMonth);
+                        newItem.setCreatedYear(createdYear);
+
+
+                        itemManager.addNewItem(newItem);
                     }
 
-                    finish();
+                    setResult(RESULT_OK, null);
+                    this.finish();
                 } else {
                     String warning = "A title is required.";
                     Toast.makeText(ToDoItemActivity.this,
@@ -213,6 +279,10 @@ public class ToDoItemActivity
             case R.id.action_delete:
                 //TODO: delete item from storage
                 //TODO: If item is new, dont show delete option
+
+                itemManager = new ToDoItemManager();
+                itemManager.removeItem(id);
+                this.finish();
 
             default:
                 //action not recognized

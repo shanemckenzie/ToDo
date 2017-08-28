@@ -49,7 +49,7 @@
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
 
-            android:background="@color/colorAccent"
+            android:background="@drawable/edit_text_rect"
 
             />
 
@@ -69,6 +69,7 @@
             android:paddingRight="5dp"
 
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
 
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
@@ -78,104 +79,142 @@
             android:maxLines="10"
             android:scrollbars="vertical"
 
-            android:background="@color/colorAccent"
+            android:background="@drawable/edit_text_rect"
 
             />
 
         <!-- TODO: throw time & date picker in a Dialogue Fragment -->
         <!--TODO: time picker not working with scroll view-->
 
-        <Button
-            android:id="@+id/btn_time"
+        <LinearLayout
+            android:id="@+id/time_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Time"
+            android:orientation="horizontal"
             android:layout_below="@+id/to_do_item_desc"
-            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            >
 
-            android:layout_marginTop="15dp"
+            <Button
+                android:id="@+id/btn_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Time"
 
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
+                android:layout_centerInParent="true"
 
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorPrimaryDark"
-            />
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+
+                android:layout_marginEnd="20dp"
+
+                android:textColor="@color/colorPrimaryDark"
+                android:elevation="2dp"
+                android:background="@drawable/button_rect"
+                />
+
+            <TextView
+                android:id="@+id/due_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+
+                android:text="Time"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/date_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/time_linear_layout"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            >
+
+            <Button
+                android:id="@+id/btn_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Date"
+
+                android:layout_centerInParent="true"
+
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+
+                android:layout_marginEnd="20dp"
+
+                android:textColor="@color/colorPrimaryDark"
+                android:elevation="2dp"
+                android:background="@drawable/button_rect"
+                />
+
+            <TextView
+                android:id="@+id/due_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+
+                android:text="Date"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                />
+
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/due_time_text"
+            android:id="@+id/created_date_msg"
+            android:layout_below="@id/date_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/btn_time"
-            android:layout_alignBaseline="@+id/btn_time"
-            android:text="Time"
+
+            android:layout_marginTop="25dp"
+
+
+            android:text="Date Created:"
+            android:textStyle="bold"
+
+            android:layout_centerHorizontal="true"
             />
 
-        <Button
-            android:id="@+id/btn_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Date"
-            android:layout_below="@+id/btn_time"
-            android:layout_centerInParent="true"
-
-            android:layout_marginTop="15dp"
-
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorPrimaryDark"
-            />
         <TextView
-            android:id="@+id/due_date_text"
+            android:id="@+id/created_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/btn_date"
-            android:layout_alignBaseline="@+id/btn_date"
-            android:text="Date"
+            android:background="@drawable/static_text_rect"
+            android:layout_below="@id/created_date_msg"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="10dp"
+
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+
+            android:text="07/11/2017"
+            android:textColor="@color/colorLightAccent"
+            android:textSize="15sp"
             />
-
-
-        <!--<TimePicker-->
-            <!--android:id="@+id/to_do_time_picker"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/to_do_item_desc"-->
-
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:paddingLeft="5dp"-->
-            <!--android:paddingRight="5dp"-->
-
-            <!--android:layout_marginTop="10dp"-->
-
-            <!--android:paddingTop="15dp"-->
-            <!--android:paddingBottom="15dp"-->
-            <!--&gt;-->
-
-        <!--</TimePicker>-->
-
-        <!--<DatePicker-->
-            <!--android:id="@+id/to_do_date_picker"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/to_do_time_picker"-->
-
-
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:paddingLeft="5dp"-->
-            <!--android:paddingRight="5dp"-->
-
-            <!--android:layout_marginTop="10dp"-->
-
-            <!--android:paddingTop="15dp"-->
-            <!--android:paddingBottom="15dp"-->
-            <!--&gt;-->
-
-
-        <!--</DatePicker>-->
-
 
 
     </RelativeLayout>

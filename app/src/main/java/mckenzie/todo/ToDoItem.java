@@ -13,13 +13,13 @@ public class ToDoItem {
     private int hour;
     private int minute;
     //TODO: Add due date and created date
-    int createdYear;
-    int createdMonth;
-    int createdDay;
+    private int createdYear;
+    private int createdMonth;
+    private int createdDay;
 
-    int dueYear;
-    int dueMonth;
-    int dueDay;
+    private int dueYear;
+    private int dueMonth;
+    private int dueDay;
 
     public ToDoItem() {
         this.title = "Example title";
@@ -79,5 +79,53 @@ public class ToDoItem {
 
     public int getId() {
         return id;
+    }
+
+    public int getCreatedYear() {
+        return createdYear;
+    }
+
+    public void setCreatedYear(int createdYear) {
+        this.createdYear = createdYear;
+    }
+
+    public int getCreatedMonth() {
+        return createdMonth;
+    }
+
+    public void setCreatedMonth(int createdMonth) {
+        this.createdMonth = createdMonth;
+    }
+
+    public int getCreatedDay() {
+        return createdDay;
+    }
+
+    public void setCreatedDay(int createdDay) {
+        this.createdDay = createdDay;
+    }
+
+    public int getDueYear() {
+        return dueYear;
+    }
+
+    public void setDueYear(int dueYear) {
+        this.dueYear = dueYear;
+    }
+
+    public int getDueMonth() {
+        return dueMonth;
+    }
+
+    public void setDueMonth(int dueMonth) {
+        this.dueMonth = dueMonth;
+    }
+
+    public int getDueDay() {
+        return dueDay;
+    }
+
+    public void setDueDay(int dueDay) {
+        this.dueDay = dueDay;
     }
 }

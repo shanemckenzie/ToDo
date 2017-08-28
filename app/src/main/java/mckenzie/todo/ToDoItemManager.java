@@ -1,6 +1,7 @@
 package mckenzie.todo;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class ToDoItemManager {
 
-    private DBHelper db;
+    private static DBHelper db;
 
     //public static ToDoItem[] items;
     public static ArrayList<ToDoItem> items;
@@ -28,9 +29,10 @@ public class ToDoItemManager {
     void addNewItem(ToDoItem newTask) {
         //TODO: Append new item to end of the list
         //TODO: Save to storage
+        //db.getAllTasks();
         db.insertTask(newTask);
 
-        //loadItems();
+
 
     }
 
@@ -51,5 +53,12 @@ public class ToDoItemManager {
         return retrievedItem;
     }
 
+    void removeItem(int id) {
+        //TODO: Fix
+
+        int result = db.deleteTask(id);
+
+        Log.d("ItemRemoved", "Item " + result + " removed");
+    }
 
 }

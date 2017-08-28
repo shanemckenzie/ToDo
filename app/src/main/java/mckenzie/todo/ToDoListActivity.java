@@ -99,11 +99,12 @@ public class ToDoListActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            //create a new item
             case R.id.action_new_task:
+                //create a new item
                 Intent intent = new Intent(ToDoListActivity.this, ToDoItemActivity.class);
+                //startActivity(intent);
 
-                startActivity(intent);
+                startActivityForResult(intent, 1);
 
                 return true;
 
@@ -114,7 +115,30 @@ public class ToDoListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            Intent refresh = new Intent(this, ToDoListActivity.class);
+            startActivity(refresh);
+            this.finish();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        AsyncLoadItems loadItems = new AsyncLoadItems(this);
+        loadItems.execute();
+
+    }
+
     //TODO: Delete item on check box selection
+
+
 
 }
 
