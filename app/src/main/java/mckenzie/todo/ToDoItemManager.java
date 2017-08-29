@@ -39,6 +39,7 @@ public class ToDoItemManager {
     void updateItem(int position, ToDoItem updatedItem) {
 
         //TODO: Save to storage
+        db.updateTask(position, updatedItem);
 
         items.set(position, updatedItem);
 
@@ -46,7 +47,7 @@ public class ToDoItemManager {
 
     ToDoItem getItem(Context context, int id) {
 
-        db = new DBHelper(context);
+        //db = new DBHelper(context);
         ToDoItem retrievedItem;
         retrievedItem = db.getData(id);
 

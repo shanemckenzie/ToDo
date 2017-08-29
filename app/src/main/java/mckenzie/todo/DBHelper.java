@@ -27,8 +27,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TASKS_COLUMN_DUE_MINUTE = "due_minute";
 
     //TODO: create more fields for date if necessary for data type
-    public static final String TASKS_COLUMN_CREATED_DATE = "created_date";
-    public static final String TASKS_COLUMN_DUE_DATE = "due_date";
+    public static final String TASKS_COLUMN_CREATED_DAY = "created_day";
+    public static final String TASKS_COLUMN_CREATED_MONTH = "created_month";
+    public static final String TASKS_COLUMN_CREATED_YEAR = "created_year";
+
+    public static final String TASKS_COLUMN_DUE_DAY = "due_day";
+    public static final String TASKS_COLUMN_DUE_MONTH = "due_month";
+    public static final String TASKS_COLUMN_DUE_YEAR = "due_year";
 
     private HashMap hp;
 
@@ -43,7 +48,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "CREATE TABLE tasks" +
                         "(id INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1, title TEXT, " +
                         "description TEXT, due_hour INTEGER, due_minute INTEGER," +
-                        "created_date TEXT, due_date TEXT)");
+                        "created_day INTEGER, created_month INTEGER, created_year INTEGER, " +
+                        "due_day INTEGER, due_month INTEGER, due_year INTEGER)");
     }
 
     @Override
@@ -59,15 +65,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
         contentValues.put("title", newItem.getTitle());
         contentValues.put("description", newItem.getDesc());
+
         contentValues.put("due_hour", newItem.getHour());
         contentValues.put("due_minute", newItem.getMinute());
 
-        //TODO: getters for date
-        contentValues.put("created_date", "");
-        contentValues.put("due_date", "");
+        contentValues.put("created_day", newItem.getCreatedDay());
+        contentValues.put("created_month", newItem.getCreatedMonth());
+        contentValues.put("created_year", newItem.getCreatedYear());
+
+        contentValues.put("due_day", newItem.getDueDay());
+        contentValues.put("due_month", newItem.getDueMonth());
+        contentValues.put("due_year", newItem.getDueYear());
 
         db.insert("tasks", null, contentValues);
-
         return true;
     }
 
@@ -81,10 +91,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
         retrievedItem.setTitle(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_TITLE)));
         retrievedItem.setDesc(cursor.getString(cursor.getColumnIndex(TASKS_COLUMN_DESC)));
+
         retrievedItem.setHour(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_HOUR)));
         retrievedItem.setMinute(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_DUE_MINUTE)));
+
         retrievedItem.setId(cursor.getInt(cursor.getColumnIndex(TASKS_COLUMN_ID)));
-        //TODO: get date
+
+        retrievedItem.setCreatedDay(cursor.getColumnIndex(TASKS_COLUMN_CREATED_DAY));
+        retrievedItem.setCreatedMonth(cursor.getColumnIndex(TASKS_COLUMN_CREATED_MONTH));
+        retrievedItem.setCreatedYear(cursor.getColumnIndex(TASKS_COLUMN_CREATED_YEAR));
+
+        retrievedItem.setDueDay(cursor.getColumnIndex(TASKS_COLUMN_DUE_DAY));
+        retrievedItem.setDueMonth(cursor.getColumnIndex(TASKS_COLUMN_DUE_MONTH));
+        retrievedItem.setDueYear(cursor.getColumnIndex(TASKS_COLUMN_DUE_YEAR));
 
         return retrievedItem;
     }
@@ -95,17 +114,24 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateTask(Integer id, String title, String desc, int hour, int minute,
-                              String createdDate, String dueDate) {
+    public boolean updateTask(Integer id, ToDoItem itemToUpdate) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("title", title);
-        contentValues.put("description", desc);
-        contentValues.put("due_hour", hour);
-        contentValues.put("due_minute", minute);
-        contentValues.put("created_date", createdDate);
-        contentValues.put("due_date", dueDate);
+        contentValues.put("title", itemToUpdate.getTitle());
+        contentValues.put("description", itemToUpdate.getDesc());
+
+        contentValues.put("due_hour", itemToUpdate.getHour());
+        contentValues.put("due_minute", itemToUpdate.getMinute());
+
+        contentValues.put("created_day", itemToUpdate.getCreatedDay());
+        contentValues.put("created_month", itemToUpdate.getCreatedMonth());
+        contentValues.put("created_year", itemToUpdate.getCreatedYear());
+
+        contentValues.put("due_day", itemToUpdate.getDueDay());
+        contentValues.put("due_month", itemToUpdate.getDueMonth());
+        contentValues.put("due_year", itemToUpdate.getDueYear());
 
         db.update("tasks", contentValues, "id = ? ", new String[] { Integer.toString(id) });
 

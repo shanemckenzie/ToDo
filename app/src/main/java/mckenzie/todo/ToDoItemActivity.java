@@ -68,11 +68,14 @@ public class ToDoItemActivity
             id = intent.getIntExtra("TASK_ID", 1);
 
 
+
             //ToDoItem currentItem = DBHelper.getData(this, id);
 
             itemManager = new ToDoItemManager();
             Log.d("ID selected", String.valueOf(id));
             ToDoItem currentItem = itemManager.getItem(this, id);
+
+
 
 
             //TODO: set activity info with data from task
@@ -90,14 +93,19 @@ public class ToDoItemActivity
                 itemDesc.setText(currentItem.getDesc());
             }
 
+
             if (currentItem.getDueYear() != 0) {
-                dueDateText.setText(currentItem.getDueDay()
-                        + currentItem.getDueMonth() + currentItem.getDueYear());
+                dueDateText.setText(String.valueOf(currentItem.getDueDay())
+                        + "/" + String.valueOf(currentItem.getDueMonth())
+                        + "/" + String.valueOf(currentItem.getDueYear()));
             }
+            Log.d("Intent Received", String.valueOf(id));
 
             if (currentItem.getHour() != 0) {
-                dueTimeText.setText(currentItem.getHour() + ":" + currentItem.getMinute());
+                dueTimeText.setText(String.valueOf(currentItem.getHour()) + ":"
+                        + String.valueOf(currentItem.getMinute()));
             }
+
 
             if (currentItem.getCreatedYear() != 0) {
                 createdMonth = currentItem.getCreatedMonth();
@@ -214,10 +222,10 @@ public class ToDoItemActivity
                 itemManager = new ToDoItemManager();
 
                 if (itemTitle.getText().toString().trim().length() > 0) {
-                    currentItem.setTitle(itemTitle.toString());
+                    currentItem.setTitle(itemTitle.getText().toString());
 
                     if (itemDesc != null) {
-                        currentItem.setDesc(itemDesc.toString());
+                        currentItem.setDesc(itemDesc.getText().toString());
                     } else {
                         currentItem.setDesc("");
                     }
@@ -231,26 +239,26 @@ public class ToDoItemActivity
                         ToDoItem updatedItem = new ToDoItem();
                         //TODO: Update item
 
-                        updatedItem.setTitle(itemTitle.toString());
-                        updatedItem.setDesc(itemDesc.toString());
+                        updatedItem.setTitle(itemTitle.getText().toString());
+                        updatedItem.setDesc(itemDesc.getText().toString());
                         updatedItem.setHour(mHour);
                         updatedItem.setMinute(mMinute);
                         updatedItem.setCreatedDay(createdDay);
                         updatedItem.setCreatedMonth(createdMonth);
                         updatedItem.setCreatedYear(createdYear);
 
-                        itemManager.updateItem(item.getItemId(), updatedItem);
+                        itemManager.updateItem(id, updatedItem);
 
                     } else {
                         
                         ToDoItem newItem = new ToDoItem();
                         itemManager = new ToDoItemManager();
                         //TODO: Save new item
-                        newItem.setTitle(itemTitle.toString());
+                        newItem.setTitle(itemTitle.getText().toString());
 
 
                         if (itemDesc != null) {
-                            newItem.setDesc(itemDesc.toString());
+                            newItem.setDesc(itemDesc.getText().toString());
                         }
 
 

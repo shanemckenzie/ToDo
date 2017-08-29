@@ -120,7 +120,6 @@ public class ToDoListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-
             Intent refresh = new Intent(this, ToDoListActivity.class);
             startActivity(refresh);
             this.finish();
